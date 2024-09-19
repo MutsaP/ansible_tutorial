@@ -1,0 +1,30 @@
+
+---
+- name: Call the tasks
+  hosts: localhost
+  become: yes
+  gather_facts: yes
+  vars:
+    pulpproc: 0
+    dataRH: null
+  tasks:
+    - name: Create the Redhat repo
+      include_role:
+        name: pulp3_squeezer_rh_rpm
+      vars: null
+      loop: null
+      ignore_errors: yes
+
+    - name: Delete the non RH_repo before create exist
+      include_role:
+        name: pulp3_squeezer_delete_rpm_repo
+      vars: null
+      loop: null
+      ignore_errors: yes
+
+    - name: Create the non RH_repo
+      include_role:
+        name: pulp3_squeezer_non_RH_rpm
+      vars: null
+      loop: null
+      ignore_errors: yes
